@@ -48,4 +48,12 @@ var ConnectionAuthorizationStatus;
     document.getElementById("HeadRotData").innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
 	}
 	
+	function SaveGazeData(GazeData){
+	
+		
+	
+	}
+	
+
+	
 	Connect();
