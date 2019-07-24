@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+<script type = "text/javascript" src="GazePointer.js"></script>
+</head>
+
+<body>
+
+<div>
+<center>
+<h3>Hello, Welcome!</h3>
+<button onclick="displayPrompt()">Register Subject</button>
+</center>
+</div>
+
+<div >
+<script>
+function displayPrompt() {
+  var txt;
+  var person = prompt("Please enter your name:", "Subject ID");
+  if (person == null || person == "") {
+    txt = "User cancelled the prompt.";
+  } else {
+    txt = "Hello, " + person + " following is your real time data from the webcam.";
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
+</script>
+<p id = "demo"> </p>
+<p id = "GazeData" > </p> 
+<p id = "HeadPhoseData" > </p> 
+<p id = "HeadRotData" > </p>
+</div>
+</body>
+
+</html>
