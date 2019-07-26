@@ -63,6 +63,9 @@ var ConnectionAuthorizationStatus;
 		var headRoll = row.insertCell(7);
 		var timeStamp = row.insertCell(8);
 		
+		var today = new Date();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		
 		gazeX.innerHTML = GazeData.GazeX;
 		gazeY.innerHTML = GazeData.GazeY;
 		headX.innerHTML = GazeData.HeadX;
@@ -71,7 +74,7 @@ var ConnectionAuthorizationStatus;
 		headYaw.innerHTML = GazeData.HeadYaw;
 		headPitch.innerHTML = GazeData.HeadPitch;
 		headRoll.innerHTML = GazeData.HeadRoll;
-		timeStamp.innerHTML = Date.getTime();
+		timeStamp.innerHTML = time;
 	}
 	
 
