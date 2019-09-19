@@ -4,10 +4,13 @@
 <head></head>
 
 <script type = "text/javascript">
-
+var gazedata = "GazeX,GazeY,HeadX,HeadY,HeadZ,HeadYaw,HeadPitch,HeadRoll,time\n";
 var ConnectionAuthorizationStatus;
 	
 	function Connect(AppKey = "AppKeyDemo", port = 43333) {
+
+		document.getElementById("datas").innerHTML="DONE";
+
 		if ("WebSocket" in window) {
 			var url = "ws://127.0.0.1:" + port;
 			var ws = new WebSocket(url);
@@ -29,12 +32,14 @@ var ConnectionAuthorizationStatus;
 				} 
 				else {
 					var GazeData = JSON.parse(received_msg);
-					SaveGazeData(GazeData);
+					document.getElementById("datas").innerHTML="MSG";
+					CreateString(GazeData);
 				}
 			}
 
 			ws.onclose = function() {
 				// websocket is closed.
+				WriteFile();
 				alert("Connection is closed...");
 			};
 		} 
@@ -44,13 +49,21 @@ var ConnectionAuthorizationStatus;
 		}	
 	}
 
-	function PlotGazeData(GazeData) {
-		document.getElementById("GazeData").innerHTML = "GazeX: " + GazeData.GazeX + " GazeY: " + GazeData.GazeY;
-		document.getElementById("HeadPhoseData").innerHTML = " HeadX: " + GazeData.HeadX + " HeadY: " + GazeData.HeadY + " HeadZ: " + GazeData.HeadZ;
-		document.getElementById("HeadRotData").innerHTML = " Yaw: " + GazeData.HeadYaw + " Pitch: " + GazeData.HeadPitch + " Roll: " + GazeData.HeadRoll;
+	function CreateString(GazeData){
+		document.getElementById("datas").innerHTML="CreateString";
+		var today = new Date();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		gazedata = gazedata.concat(GazeData.GazeX +","+GazeData.GazeY+","+GazeData.HeadX+","+GazeData.HeadY+","+GazeData.HeadZ+","+GazeData.HeadYaw+","+GazeData.HeadPitch+","+GazeData.HeadRoll+","+time+"\n");
+
+		document.getElementById("datas").innerHTML="gazeX";
 	}
-	
+	/*
 	function SaveGazeData(GazeData){
+
+		document.getElementById("datas").innerHTML="Called";
+
+		document.getElementById("datas").innerHTML="Doing Shit";
+		
 		var table = document.getElementById("DataTable");
 		var row = table.insertRow();
 		var gazeX = row.insertCell(0);
@@ -76,19 +89,40 @@ var ConnectionAuthorizationStatus;
 		headPitch.innerHTML = GazeData.HeadPitch;
 		headRoll.innerHTML = GazeData.HeadRoll;
 		timeStamp.innerHTML = time;
-	}
-	
+	}*/
+	function WriteFile(){
+		//Get filename
+		var filename=document.getElementById("demo").value;
 
-	
-	Connect();
+		//Write data
+		var pom = document.createElement('a');
+ 		pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + 
+		encodeURIComponent(gazedata));
+
+ 		//Download file
+		pom.setAttribute('download',filename);
+		pom.style.display = 'inline';
+		document.body.appendChild(pom);
+		pom.click();
+	}
 
 </script>
+
 
 <body>
 
 <table id = 'DataTable'>
 </table>
 
-</body>
+<p id = 'datas'>
+sasas
+</p>
 
+<form>
+Subject Id :
+<input type="text" id="demo"><br>
+<button type="button" onclick="Connect()">TryIt</button>
+</form>
+
+</body>
 </html>
