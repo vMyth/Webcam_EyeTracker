@@ -9,7 +9,7 @@ var ConnectionAuthorizationStatus;
 	
 	function Connect(AppKey = "AppKeyDemo", port = 43333) {
 
-		document.getElementById("datas").innerHTML="DONE";
+		document.getElementById("status").innerHTML="Connected";
 
 		if ("WebSocket" in window) {
 			var url = "ws://127.0.0.1:" + port;
@@ -32,7 +32,7 @@ var ConnectionAuthorizationStatus;
 				} 
 				else {
 					var GazeData = JSON.parse(received_msg);
-					document.getElementById("datas").innerHTML="MSG";
+					document.getElementById("status").innerHTML="Recieving Data";
 					CreateString(GazeData);
 				}
 			}
@@ -50,12 +50,9 @@ var ConnectionAuthorizationStatus;
 	}
 
 	function CreateString(GazeData){
-		document.getElementById("datas").innerHTML="CreateString";
 		var today = new Date();
 		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 		gazedata = gazedata.concat(GazeData.GazeX +","+GazeData.GazeY+","+GazeData.HeadX+","+GazeData.HeadY+","+GazeData.HeadZ+","+GazeData.HeadYaw+","+GazeData.HeadPitch+","+GazeData.HeadRoll+","+time+"\n");
-
-		document.getElementById("datas").innerHTML="gazeX";
 	}
 	/*
 	function SaveGazeData(GazeData){
@@ -92,7 +89,7 @@ var ConnectionAuthorizationStatus;
 	}*/
 	function WriteFile(){
 		//Get filename
-		var filename=document.getElementById("demo").value;
+		var filename=document.getElementById("sid").value;
 
 		//Write data
 		var pom = document.createElement('a');
@@ -114,13 +111,13 @@ var ConnectionAuthorizationStatus;
 <table id = 'DataTable'>
 </table>
 
-<p id = 'datas'>
-sasas
+<p id = 'status'>
+Hello. Please enter the subject ID below. 
 </p>
 
 <form>
 Subject Id :
-<input type="text" id="demo"><br>
+<input type="text" id="sid"><br>
 <button type="button" onclick="Connect()">TryIt</button>
 </form>
 
